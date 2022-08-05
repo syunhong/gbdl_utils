@@ -35,7 +35,7 @@ gbdl_geocode <- function(addr, method = "naver", client_id, client_secret,
 
     tmp <- content(tmp, as = "parse", encoding = "UTF-8")
     
-    if (any(is(tmp)) %in% "xml_document") {
+    if (any(is(tmp) %in% "xml_document")) {
       if (save_xml)
         write_xml(tmp, paste0(xml_dir, "/id-", i, ".xml"))
       

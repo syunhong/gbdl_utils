@@ -29,7 +29,7 @@ gbdl_geocode <- function(addr, method = "naver", client_id, client_secret,
     if (showProgress)
       setTxtProgressBar(pb, i)
     
-    tmp <- GET(url = url, query = list(query = addr[267]),
+    tmp <- GET(url = url, query = list(query = addr[i]),
                add_headers("X-NCP-APIGW-API-KEY-ID" = client_id,
                            "X-NCP-APIGW-API-KEY" = client_secret))
 

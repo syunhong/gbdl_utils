@@ -49,7 +49,7 @@ gbdl_geocode <- function(addr, method = "naver", client_id, client_secret,
       dist <- as.numeric(unlist(tmp_processed$distance))      
     } else {
       if (save_xml)
-        save(tmp, paste0(xml_dir, "/id-", i, ".RData"))
+        save(tmp, file = paste0(xml_dir, "/id-", i, ".RData"))
       
       road_addr <- NA
       jibun_addr <- NA

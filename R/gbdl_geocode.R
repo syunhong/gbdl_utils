@@ -34,20 +34,30 @@ gbdl_geocode <- function(addr, method = "naver", client_id, client_secret,
                            "X-NCP-APIGW-API-KEY" = client_secret))
 
     tmp <- content(tmp, as = "parse", encoding = "UTF-8")
-    if (save_xml) {
-      tryCatch({ 
+    
+    if (any(is(tmp)) %in% "xml_document") {
+      if (save_xml)
         write_xml(tmp, paste0(xml_dir, "/id-", i, ".xml"))
-      }, error = function(e) cat("\nUnable to create a XML file at", i, "\n"))
+      
+      tmp_processed <- as_list(tmp)$addressResponse$addresses
+      
+      x <- as.numeric(unlist(tmp_processed$x))
+      y <- as.numeric(unlist(tmp_processed$y))
+      road_addr <- unlist(tmp_processed$roadAddress)
+      jibun_addr <- unlist(tmp_processed$jibunAddress)
+      en_addr <- unlist(tmp_processed$englishAddress)
+      dist <- as.numeric(unlist(tmp_processed$distance))      
+    } else {
+      if (save_xml)
+        save(tmp, paste0(xml_dir, "/id-", i, ".RData"))
+      
+      road_addr <- NA
+      jibun_addr <- NA
+      en_addr <- NA
+      x <- NA
+      y <- NA
+      dist <- NA
     }
-    
-    tmp_processed <- as_list(tmp)$addressResponse$addresses
-    
-    x <- as.numeric(unlist(tmp_processed$x))
-    y <- as.numeric(unlist(tmp_processed$y))
-    road_addr <- unlist(tmp_processed$roadAddress)
-    jibun_addr <- unlist(tmp_processed$jibunAddress)
-    en_addr <- unlist(tmp_processed$englishAddress)
-    dist <- as.numeric(unlist(tmp_processed$distance))
     
     # If an error occurs:
     tryCatch({ 

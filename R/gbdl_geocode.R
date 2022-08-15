@@ -1,11 +1,11 @@
-# ------------------------------------------------------------------------------
+# ******************************************************************************
 #
 # gbdl_geocode()
 #
-# ------------------------------------------------------------------------------
-gbdl_geocode <- function(addr, method = "naver", client_id, client_secret, 
+# ******************************************************************************
+gbdl_geocode <- function(addr, client_id, client_secret,
                          save_xml = TRUE, xml_dir, out_dir, 
-                         autosave_freq = 100, showProgress = TRUE) {
+                         autosave_freq, unique = TRUE, showProgress = TRUE) {
   require(httr)
   require(xml2)
   

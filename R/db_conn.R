@@ -1,13 +1,17 @@
-# ------------------------------------------------------------------------------
+# ******************************************************************************
+#
 # db_conn()
-# ------------------------------------------------------------------------------
+#
+# ******************************************************************************
 db_conn <- function(param, user_name, passwd) {
   
   require(RPostgreSQL)
   require(getPass)
   
-  if (missing(user_name))
+  if (missing(user_name)) {
     user_name <- readline("Enter your username: ")
+    Sys.sleep(3)
+  }
   
   if (missing(passwd))
     passwd <- getPass(msg = "Enter your password")

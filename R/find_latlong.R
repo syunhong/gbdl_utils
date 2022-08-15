@@ -16,7 +16,7 @@ find_latlong <- function(addr, id, secret, silent = TRUE, progressBar = TRUE,
     xml_dir <- getwd()
   
   if (!silent) {
-    cat("*** GBDL Geocoding Wrapper Function ***\n\n")
+    cat("*** GBDL Geocoding Wrapper Function 0.1.0***\n\n")
     cat("Geocoding API:", "Naver Maps\n")
     cat("Execution date:", as.character(startTime), "\n")
     cat("Input addresses:", n, "\n")
@@ -29,9 +29,9 @@ find_latlong <- function(addr, id, secret, silent = TRUE, progressBar = TRUE,
     }
     
     if (progressBar)
-      cat("progressBar: Enabled\n\n\n")
+      cat("progressBar: Enabled\n\n")
     else
-      cat("progressBar: Disabled\n\n\n")
+      cat("progressBar: Disabled\n\n")
   }
   
   res <- data.frame(id = 1:n, input_addr = addr, 

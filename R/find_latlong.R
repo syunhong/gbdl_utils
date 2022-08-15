@@ -16,7 +16,7 @@ find_latlong <- function(addr, id, secret, silent = TRUE, progressBar = TRUE,
     xml_dir <- getwd()
   
   if (!silent) {
-    cat("*** GBDL Geocoding Wrapper Function 0.1.0***\n\n")
+    cat("*** GBDL Geocoding Wrapper Function 0.1 ***\n\n")
     cat("Geocoding API:", "Naver Maps\n")
     cat("Execution date:", as.character(startTime), "\n")
     cat("Input addresses:", n, "\n")
@@ -37,8 +37,7 @@ find_latlong <- function(addr, id, secret, silent = TRUE, progressBar = TRUE,
   res <- data.frame(id = 1:n, input_addr = addr, 
                     road_addr = NA, jibun_addr = NA, en_addr = NA, 
                     x = NA, y = NA, dist = NA)
-  err <- numeric()
-  
+
   # If 'progressBar' is TRUE, initialise it.
   if (progressBar)
     pb <- txtProgressBar(min = 0, max = n, style = 3)
@@ -81,25 +80,24 @@ find_latlong <- function(addr, id, secret, silent = TRUE, progressBar = TRUE,
       jibun_addr <- NA
       en_addr <- NA
       dist <- NA
-      err <- append(err, i)
     }
     
     # Append the result from API to the output data frame
     tryCatch({ 
       res[i,3:8] <- c(road_addr, jibun_addr, en_addr, x, y, dist)
-    }, error = function(e) err <- append(err, i))
+    }, error = function(e) return(FALSE))
   }
   
-  err <- unique(err)
+  err <- which(is.na(road_addr))
   endTime <- Sys.time()
   
   if (!silent) {
     cat("\n\nGeocoding completed!\n\n")
     cat("Completion date:", as.character(endTime), "\n")
-    cat("Elapsed time:", round(endTime - startTime, 2), "sec\n")
+    cat("Elapsed time:", round(endTime - startTime, 2), "unit time\n")
     cat("Input addresses:", n, "\n")
     cat("No. failed:", length(err), "\n")
-    cat("Error rate: ", round(length(err)/n * 100, 2), "%\n", sep = "")
+    cat("Error rate: ", round(length(err)/n * 100, 2), "%\n\n", sep = "")
   }
   
   return(list(result = res, error = err, start = startTime, end = endTime))

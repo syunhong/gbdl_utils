@@ -88,7 +88,7 @@ find_latlong <- function(addr, id, secret, silent = TRUE, progressBar = TRUE,
     }, error = function(e) return(FALSE))
   }
   
-  err <- which(is.na(road_addr))
+  err <- which(is.na(res$road_addr))
   endTime <- Sys.time()
   
   if (!silent) {
